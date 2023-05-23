@@ -39,23 +39,23 @@ async function run() {
         const suvCarCollection = client.db('toyDB').collection('suvCar');
         const toyCollection = client.db('toyDB').collection('toy');
 
-        app.get('/sportscar', async (req, res) => {
-            const cursor = sportsCarCollection.find({});
-            const result = await cursor.toArray();
-            res.send(result);
-        })
+        // app.get('/sportscar', async (req, res) => {
+        //     const cursor = sportsCarCollection.find({});
+        //     const result = await cursor.toArray();
+        //     res.send(result);
+        // })
 
-        app.get('/classiccar', async (req, res) => {
-            const cursor = classicCarCollection.find({});
-            const result = await cursor.toArray();
-            res.send(result)
-        })
+        // app.get('/classiccar', async (req, res) => {
+        //     const cursor = classicCarCollection.find({});
+        //     const result = await cursor.toArray();
+        //     res.send(result)
+        // })
 
-        app.get('/suvcar', async (req, res) => {
-            const cursor = suvCarCollection.find({});
-            const result = await cursor.toArray();
-            res.send(result)
-        })
+        // app.get('/suvcar', async (req, res) => {
+        //     const cursor = suvCarCollection.find({});
+        //     const result = await cursor.toArray();
+        //     res.send(result)
+        // })
 
         //SEARCH
         const indexKeys = { name: 1, category: 1 };
@@ -102,30 +102,30 @@ async function run() {
             res.send(result);
         });
 
-        // //UPDATE
-        // app.put("/toy/:id", async (req, res) => {
-        //     const id = req.params.id;
-        //     const body = req.body;
-        //     console.log(body);
-        //     const filter = { _id: new ObjectId(id) };
-        //     const updateDoc = {
-        //         $set: {
-        //             name: body.price,
-        //             quantity: body.quantity,
-        //             email: body.email
-        //         },
-        //     };
-        //     const result = await toyCollection.updateOne(filter, updateDoc);
-        //     res.send(result);
-        // });
+        //UPDATE
+        app.put("/toy/:id", async (req, res) => {
+            const id = req.params.id;
+            const body = req.body;
+            console.log(body);
+            const filter = { _id: new ObjectId(id) };
+            const updateDoc = {
+                $set: {
+                    name: body.price,
+                    quantity: body.quantity,
+                    email: body.email
+                },
+            };
+            const result = await toyCollection.updateOne(filter, updateDoc);
+            res.send(result);
+        });
 
-        // //DELETE
-        // app.delete('/toy/:id', async (req, res) => {
-        //     const id = req.params.id;
-        //     const query = { _id: new ObjectId(id) }
-        //     const result = await toyCollection.deleteOne(query);
-        //     res.send(result);
-        // })
+        //DELETE
+        app.delete('/toy/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await toyCollection.deleteOne(query);
+            res.send(result);
+        })
 
 
         // Send a ping to confirm a successful connection
