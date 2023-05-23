@@ -33,10 +33,10 @@ const client = new MongoClient(uri, {
 async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
-        client.connect();
-        const sportsCarCollection = client.db('toyDb').collection('sportsCar');
-        const classicCarCollection = client.db('toyDb').collection('classicCar');
-        const suvCarCollection = client.db('toyDb').collection('suvCar');
+        // client.connect();
+        const sportsCarCollection = client.db('toyDB').collection('sportsCar');
+        const classicCarCollection = client.db('toyDB').collection('classicCar');
+        const suvCarCollection = client.db('toyDB').collection('suvCar');
         const toyCollection = client.db('toyDB').collection('toy');
 
         app.get('/sportscar', async (req, res) => {
@@ -47,6 +47,12 @@ async function run() {
 
         app.get('/classiccar', async (req, res) => {
             const cursor = classicCarCollection.find({});
+            const result = await cursor.toArray();
+            res.send(result)
+        })
+
+        app.get('/suvcar', async (req, res) => {
+            const cursor = suvCarCollection.find({});
             const result = await cursor.toArray();
             res.send(result)
         })
@@ -71,7 +77,8 @@ async function run() {
 
         //READ DATA FROM ALL TOYS PAGE
         app.get('/toy', async (req, res) => {
-            const cursor = toyCollection.find();
+            const limit = parseInt(req.query.limit) || 20
+            const cursor = toyCollection.find().limit(limit);
             const result = await cursor.toArray();
             res.send(result);
         })
@@ -95,30 +102,30 @@ async function run() {
             res.send(result);
         });
 
-        //UPDATE
-        app.put("/toy/:id", async (req, res) => {
-            const id = req.params.id;
-            const body = req.body;
-            console.log(body);
-            const filter = { _id: new ObjectId(id) };
-            const updateDoc = {
-                $set: {
-                    name: body.price,
-                    quantity: body.quantity,
-                    email: body.email
-                },
-            };
-            const result = await toyCollection.updateOne(filter, updateDoc);
-            res.send(result);
-        });
+        // //UPDATE
+        // app.put("/toy/:id", async (req, res) => {
+        //     const id = req.params.id;
+        //     const body = req.body;
+        //     console.log(body);
+        //     const filter = { _id: new ObjectId(id) };
+        //     const updateDoc = {
+        //         $set: {
+        //             name: body.price,
+        //             quantity: body.quantity,
+        //             email: body.email
+        //         },
+        //     };
+        //     const result = await toyCollection.updateOne(filter, updateDoc);
+        //     res.send(result);
+        // });
 
-        //DELETE
-        app.delete('/toy/:id', async (req, res) => {
-            const id = req.params.id;
-            const query = { _id: new ObjectId(id) }
-            const result = await toyCollection.deleteOne(query);
-            res.send(result);
-        })
+        // //DELETE
+        // app.delete('/toy/:id', async (req, res) => {
+        //     const id = req.params.id;
+        //     const query = { _id: new ObjectId(id) }
+        //     const result = await toyCollection.deleteOne(query);
+        //     res.send(result);
+        // })
 
 
         // Send a ping to confirm a successful connection
