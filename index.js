@@ -39,23 +39,23 @@ async function run() {
         const suvCarCollection = client.db('toyDB').collection('suvCar');
         const toyCollection = client.db('toyDB').collection('toy');
 
-        // app.get('/sportscar', async (req, res) => {
-        //     const cursor = sportsCarCollection.find({});
-        //     const result = await cursor.toArray();
-        //     res.send(result);
-        // })
+        app.get('/sportscar', async (req, res) => {
+            const cursor = sportsCarCollection.find({});
+            const result = await cursor.toArray();
+            res.send(result);
+        })
 
-        // app.get('/classiccar', async (req, res) => {
-        //     const cursor = classicCarCollection.find({});
-        //     const result = await cursor.toArray();
-        //     res.send(result)
-        // })
+        app.get('/classiccar', async (req, res) => {
+            const cursor = classicCarCollection.find({});
+            const result = await cursor.toArray();
+            res.send(result)
+        })
 
-        // app.get('/suvcar', async (req, res) => {
-        //     const cursor = suvCarCollection.find({});
-        //     const result = await cursor.toArray();
-        //     res.send(result)
-        // })
+        app.get('/suvcar', async (req, res) => {
+            const cursor = suvCarCollection.find({});
+            const result = await cursor.toArray();
+            res.send(result)
+        })
 
         //SEARCH
         const indexKeys = { name: 1, category: 1 };
